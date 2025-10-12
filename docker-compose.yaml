@@ -2,16 +2,25 @@ version: "3.9"
 
 services:
   vue-app:
-    build: .
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
     container_name: vue-app
     ports:
-    - "8080:8080"
+      - "5137:5137"
+      # - "5174:5174"
     volumes:
-    - .:/app
-    - /app/node_modules
+      - .:/app
+      # - /app/node_modules
     environment:
       - CHOKIDAR_USEPOLLING=true
     command: sh -c "npm install && npm run dev"
+    networks:
+      - dartgame-net
 
-  volumes:
-  node_modules:
+# volumes:
+# node_modules:
+
+networks:
+  dartgame-net:
+    driver: bridge
