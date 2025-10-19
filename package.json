@@ -1,4 +1,4 @@
-{
+  {
   "name": "dart-games",
   "version": "0.0.0",
   "private": true,
@@ -16,6 +16,7 @@
     "format": "prettier --write src/"
   },
   "dependencies": {
+    "bootstrap": "^5.3.8",
     "pinia": "^3.0.3",
     "vue": "^3.5.22",
     "vue-router": "^4.5.1"
