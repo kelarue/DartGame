@@ -1,36 +1,38 @@
 <template>
-  <div class="container py-4">
-    <h2>🎯 Jeu 301</h2>
-    <div v-if="!gameStarted">
-      <PlayersManager />
-      <button class="btn btn-success mt-3" @click="startGame" :disabled="players.length < 1">
-        Commencer la partie
-      </button>
-    </div>
-    <div v-else>
-      <h2>JEU 301</h2>
-      <ScoreBoard />
-    </div>
-    
-
-    <!-- Ici tu peux ajouter la logique du jeu -->
-  </div>
+  <GameLayout title="301">
+    <template #default="{ currentPlayer, nextPlayer, winner }">
+      <div class="mt-3">
+        <p>Tour de : <strong>{{ currentPlayer.name }}</strong></p>
+        <button class="btn btn-warning me-2" @click="simulateThrow">Lancer aléatoire</button>
+      </div>
+    </template>
+  </GameLayout>
 </template>
 
 <script setup>
-import PlayersManager from '@/components/PlayersManager.vue'
-import ScoreBoard from '@/components/ScoreBoard.vue'
-import { playersStore } from '@/stores/players'
-import { ref } from 'vue'
+import GameLayout from '@/components/GameLayout.vue'
+import { usePlayersStore } from '@/stores/players'
 
+const store = usePlayersStore()
+const { players } = store
 
-const gameStarted = ref(false)
+function simulateThrow() {
+  const player = players.find(p => p) // fallback simple
+  if (!player) return
 
-const { players, resetScores } = playersStore()
+  const points = Math.floor(Math.random() * 60) + 1
+  const newScore = player.score - points
 
-function startGame() {
-  gameStarted.value = true
-  resetScores(301);
-  console.log('Démarrer la partie avec', players.length, 'joueurs')
+  if (newScore === 0) {
+    player.score = 0
+    // winner sera mis à jour dans GameLayout
+  } else if (newScore < 0) {
+    // bust: score inchangé
+  } else {
+    player.score = newScore
+  }
+
+  // passer au joueur suivant via nextPlayer fourni par le slot
+  window.dispatchEvent(new CustomEvent('nextPlayer'))
 }
 </script>

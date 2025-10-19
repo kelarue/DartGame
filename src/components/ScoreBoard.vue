@@ -29,7 +29,7 @@
 
 <script setup>
 import { computed } from 'vue'
-import { playersStore } from '@/stores/players'
+import { usePlayersStore } from '@/stores/players'
 
 // Props
 defineProps({
@@ -38,6 +38,6 @@ defineProps({
 })
 
 // Store des joueurs
-const store = playersStore()
+const store = usePlayersStore()
 const players = computed(() => store.players)
 </script>

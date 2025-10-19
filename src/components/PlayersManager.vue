@@ -26,9 +26,9 @@
 
 <script setup>
 import { ref } from 'vue'
-import { playersStore } from '@/stores/players'
+import { usePlayersStore } from '@/stores/players'
 
-const store = playersStore()
+const store = usePlayersStore()
 const { players, addPlayer, removePlayer } = store
 
 const newPlayer = ref('')
