@@ -7,7 +7,7 @@
         :key="index"
         class="list-group-item d-flex justify-content-between align-items-center"
       >
-        {{ player.name }}
+        #{{ index+1 }} {{ player.name }}
         <button class="btn btn-sm btn-danger" @click="removePlayer(index)">✖</button>
       </li>
     </ul>

@@ -9,6 +9,7 @@
     </div>
     <div v-else>
       <h2>JEU 301</h2>
+      <ScoreBoard />
     </div>
     
 
@@ -18,16 +19,18 @@
 
 <script setup>
 import PlayersManager from '@/components/PlayersManager.vue'
+import ScoreBoard from '@/components/ScoreBoard.vue'
 import { playersStore } from '@/stores/players'
 import { ref } from 'vue'
 
 
 const gameStarted = ref(false)
 
-const { players } = playersStore()
+const { players, resetScores } = playersStore()
 
 function startGame() {
   gameStarted.value = true
+  resetScores(301);
   console.log('Démarrer la partie avec', players.length, 'joueurs')
 }
 </script>
